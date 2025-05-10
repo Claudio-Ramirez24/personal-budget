@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Presupuesto Personal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .mensaje {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .exito {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .resumen {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestor de Presupuesto Personal</h1>
+    
+    <div class="container">
+        <!-- Pestañas de navegación -->
+        <div class="tabs">
+            <div class="tab active" onclick="cambiarTab('registro')">Registrar Movimiento</div>
+            <div class="tab" onclick="cambiarTab('resumen')">Resumen General</div>
+            <div class="tab" onclick="cambiarTab('resumenTipo')">Resumen por Tipo</div>
+        </div>
+        
+        <!-- Contenido de las pestañas -->
+        <div id="mensajes"></div>
+        
+        <!-- Pestaña de Registro -->
+        <div id="registro" class="tab-content active">
+            <h2>Registrar Nuevo Movimiento</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre del movimiento:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" required>
+                    <option value="">Seleccione un tipo...</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="egreso">Egreso</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="monto">Monto (en $):</label>
+                <input type="number" id="monto" min="0.01" step="0.01" required>
+            </div>
+            <button type="button" onclick="registrarMovimiento()">Registrar</button>
+            <button type="button" onclick="limpiarFormulario()">Limpiar</button>
+        </div>
+        
+        <!-- Pestaña de Resumen General -->
+        <div id="resumen" class="tab-content">
+            <h2>Resumen General</h2>
+            <div id="resumenGeneral" class="resumen">
+                <p>No hay movimientos registrados todavía.</p>
+            </div>
+        </div>
+        
+        <!-- Pestaña de Resumen por Tipo -->
+        <div id="resumenTipo" class="tab-content">
+            <h2>Resumen por Tipo</h2>
+            <div id="resumenPorTipo" class="resumen">
+                <p>No hay movimientos registrados todavía.</p>
+            </div>
+        </div>
+        
+        <!-- Tabla de movimientos -->
+        <div id="listaMovimientos" style="margin-top: 30px;">
+            <h2>Movimientos Registrados</h2>
+            <table id="tablaMovimientos">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Monto ($)</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se cargarán los movimientos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
